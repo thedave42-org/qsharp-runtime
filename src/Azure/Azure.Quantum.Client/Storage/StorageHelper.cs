@@ -46,6 +46,32 @@ namespace Microsoft.Azure.Quantum.Storage
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Serialization protocol of the downloaded BLOB.</returns>
         public async Task<ProtocolType> DownloadBlobAsync(
+            Uri blobUri,
+            Stream destination,
+            CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                BlobClient blob = await this.GetBlobClient(containerName, blobName, false, cancellationToken);
+                await blob.DownloadToAsync(destination, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                throw CreateException(ex, "Could not download BLOB", containerName, blobName);
+            }
+
+            return ProtocolType.COMPACT_PROTOCOL;
+        }
+
+        /// <summary>
+        /// Downloads the BLOB.
+        /// </summary>
+        /// <param name="containerName">Name of the container.</param>
+        /// <param name="blobName">Name of the BLOB.</param>
+        /// <param name="destination">The destination.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Serialization protocol of the downloaded BLOB.</returns>
+        public async Task<ProtocolType> DownloadBlobAsync(
             string containerName,
             string blobName,
             Stream destination,
@@ -160,6 +186,13 @@ namespace Microsoft.Azure.Quantum.Storage
                 containerName,
                 blobName,
                 inner);
+        }
+
+        private BlobClient GetBlobClient(
+            Uri blobUri,
+            CancellationToken cancellationToken)
+        {
+            return new BlobClient(blobUri);
         }
 
         private async Task<BlobClient> GetBlobClient(
