@@ -3,6 +3,8 @@
 
 using Microsoft.Azure.Quantum.Client.Models;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Microsoft.Azure.Quantum.Exceptions
 {
@@ -93,6 +95,17 @@ namespace Microsoft.Azure.Quantum.Exceptions
                 {
                     formattedException += $"Error code: {restErrorException?.Body?.Code}{Environment.NewLine}" +
                         $"Server message: {restErrorException?.Body?.Message}{Environment.NewLine}";
+
+                    // DEBUG output
+                    var dict = restErrorException?.Response?.Headers;
+                    if (dict != null)
+                    {
+                        formattedException += $"Headers:{Environment.NewLine}";
+                        foreach (var de in dict)
+                        {
+                            formattedException += $"{de.Key} :: {de.Value}{Environment.NewLine}";
+                        }
+                    }// DEBUG output
                 }
             }
 
