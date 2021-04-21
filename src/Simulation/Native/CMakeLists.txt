@@ -39,7 +39,7 @@ if (MSVC)
   add_definitions("/Z7")
 
   # build with no VC runtime depedencies:
-  set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT /Qspectre /guard:cf /Zi")
+  set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT /Qspectre /guard:cf /Zi /Z7")
   set(CMAKE_CXX_FLAGS_DEBUG   "${CMAKE_CXX_FLAGS_DEBUG}   /MTd /Qspectre /guard:cf")
 else (MSVC)
   set(CMAKE_CXX_FLAGS "-static-libgcc")
