@@ -40,6 +40,7 @@ if (MSVC)
 
   # build with no VC runtime depedencies:
   set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT /Qspectre /guard:cf /Zi /Z7")
+  set(CMAKE_SHARED_LINKER_FLAGS_RELEASE "${CMAKE_SHARED_LINKER_FLAGS_RELEASE} /DEBUG /OPT:REF /OPT:ICF")
   set(CMAKE_CXX_FLAGS_DEBUG   "${CMAKE_CXX_FLAGS_DEBUG}   /MTd /Qspectre /guard:cf")
 else (MSVC)
   set(CMAKE_CXX_FLAGS "-static-libgcc")
