@@ -26,6 +26,9 @@ target_include_directories(qir-rt-support-obj PUBLIC ${public_includes})
 set_property(TARGET qir-rt-support-obj PROPERTY POSITION_INDEPENDENT_CODE ON)
 target_compile_definitions(qir-rt-support-obj PRIVATE EXPORT_QIR_API)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Xclang -cfguard -Xclang -gcodeview")
+
+
 #+++++++++++++++++++++++++++++++++++++
 # qir-qis
 #+++++++++++++++++++++++++++++++++++++
