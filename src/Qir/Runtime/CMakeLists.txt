@@ -14,12 +14,21 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG")
 if(WIN32)
     if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd")
-        set(CMAKE_CXX_FLAGS_DEBUG   "${CMAKE_CXX_FLAGS_DEBUG}   /MTd /Qspectre /guard:cf")
     else()
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_DLL -D_MT -Xclang --dependent-lib=msvcrt")
-        set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT /Qspectre /guard:cf /Zi /Z7")
     endif()
 endif()
+
+# windows specific flags
+if (MSVC)
+  # always create debug info
+  add_definitions("/Zi")
+  add_definitions("/Z7")
+
+  # build with no VC runtime depedencies:
+  set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT /Qspectre /guard:cf /Zi /Z7")
+  set(CMAKE_CXX_FLAGS_DEBUG   "${CMAKE_CXX_FLAGS_DEBUG}   /MTd /Qspectre /guard:cf")
+endif (MSVC)
 
 # feel free to customize these flags for your local builds (don't check in)
 set(CMAKE_VERBOSE_MAKEFILE ON)
