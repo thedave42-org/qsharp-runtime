@@ -18,5 +18,6 @@ namespace Quantum
     // Full State Simulator
     QIR_SHARED_API std::unique_ptr<IRuntimeDriver> CreateFullstateSimulator();
 
+    QIR_SHARED_API std::unique_ptr<IRuntimeDriver> CreateOpenSystemsSimulator();
 } // namespace Quantum
 } // namespace Microsoft
